@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 import { Routes, Route, Navigate } from 'react-router-dom';
 import { SnackbarProvider } from 'notistack';
 import { ProtectedRoute } from './components/ProtectedRoute';
@@ -11,7 +11,7 @@ import Error from './pages/Error';
 import Orders from './pages/Orders';
 
 const App = () => {
-  const user = JSON.parse(localStorage.getItem('user'));
+  const user = useMemo(() => JSON.parse(localStorage.getItem('user')), []);
 
   return (
     <SnackbarProvider maxSnack={3}>
@@ -20,7 +20,7 @@ const App = () => {
         <Route 
           path="/login" 
           element={
-            user ? <Navigate to="/" /> : <Login />
+            user ? <Navigate to="/" replace /> : <Login />
           } 
         />
 
@@ -75,7 +75,7 @@ const App = () => {
         <Route 
           path="*" 
           element={
-            user ? <Error /> : <Navigate to="/login" />
+            user ? <Error /> : <Navigate to="/login" replace />
           } 
         />
       </Routes>

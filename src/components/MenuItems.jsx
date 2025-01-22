@@ -19,7 +19,7 @@ import {
 const menuConfig = {
   Admin: [
     { path: '/', icon: <HomeIcon />, text: 'Realizar Pedido' },
-    { path: '/admin/products', icon: <InventoryIcon />, text: 'Productos' },
+    { path: '/admin/products', icon: <InventoryIcon />, text: 'Materiales' },
     { path: '/admin/orders', icon: <InventoryIcon />, text: 'Pedidos' },
     { path: '/admin/users', icon: <GroupIcon />, text: 'Usuarios' },
     { path: '/history', icon: <HistoryIcon />, text: 'Historial' }

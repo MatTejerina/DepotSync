@@ -81,7 +81,7 @@ const ProductTable = ({
                                 width: '100px',
                                 height: '100px',
                                 objectFit: 'contain',
-                                backgroundColor: '#f5f5f5'
+                                backgroundColor: 'transparent'
                               }}
                             />
                           </td>
