@@ -149,8 +149,7 @@ const Users = () => {
         <Table>
           <TableHead>
             <TableRow>
-              <TableCell>Nombre</TableCell>
-              <TableCell>Apellido</TableCell>
+              <TableCell>Nombre y Apellido</TableCell>
               <TableCell>Email</TableCell>
               <TableCell>Rol</TableCell>
               <TableCell align="center">Acciones</TableCell>
@@ -159,8 +158,7 @@ const Users = () => {
           <TableBody>
             {users.map((user) => (
               <TableRow key={user.id}>
-                <TableCell>{user.nombre}</TableCell>
-                <TableCell>{user.apellido}</TableCell>
+                <TableCell>{user.nombre} {user.apellido}</TableCell>
                 <TableCell>{user.email}</TableCell>
                 <TableCell>{user.role}</TableCell>
                 <TableCell align="center">

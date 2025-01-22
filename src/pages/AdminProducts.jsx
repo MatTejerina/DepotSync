@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
+import { DragDropContext, Droppable, Draggable } from '@hello-pangea/dnd';
 import { db } from '../services/firebase';
 import { 
   collection, 
@@ -18,7 +18,13 @@ import { IconButton, Tooltip, Box } from '@mui/material';
 import ConfirmDialog from '../components/ConfirmDialog';
 import { useSnackbar } from 'notistack';
 
-const ProductTable = ({ products, title, isDraggable, onEdit, onDelete }) => {
+const ProductTable = ({ 
+  products = [], 
+  title = '', 
+  isDraggable = false, 
+  onEdit = () => {}, 
+  onDelete = () => {} 
+}) => {
   const [mounted, setMounted] = React.useState(false);
   const droppableId = isDraggable ? "no-seriados-table" : "seriados-table";
 
@@ -31,10 +37,10 @@ const ProductTable = ({ products, title, isDraggable, onEdit, onDelete }) => {
   return (
     <div className="products-table-container">
       <h3 className="table-title">{title}</h3>
-      <Droppable droppableId={droppableId}>
-        {(provided) => (
+      <Droppable droppableId={droppableId} type="PRODUCT">
+        {(provided, snapshot) => (
           <div 
-            className="droppable-container"
+            className={`droppable-container ${snapshot.isDraggingOver ? 'dragging-over' : ''}`}
             ref={provided.innerRef} 
             {...provided.droppableProps}
           >
@@ -64,6 +70,7 @@ const ProductTable = ({ products, title, isDraggable, onEdit, onDelete }) => {
                           {...provided.draggableProps}
                           {...provided.dragHandleProps}
                           className={snapshot.isDragging ? 'dragging' : ''}
+                          data-stock={product.stock}
                         >
                           <td>⋮⋮</td>
                           <td>
@@ -81,7 +88,11 @@ const ProductTable = ({ products, title, isDraggable, onEdit, onDelete }) => {
                           <td>{product.material}</td>
                           <td>{product.minimo}</td>
                           <td>{product.maximo}</td>
-                          <td>{product.stock}</td>
+                          <td>
+                            <span className={`stock-status ${product.stock}`}>
+                              {product.stock === 'disponible' ? 'Disponible' : 'No Disponible'}
+                            </span>
+                          </td>
                           <td>
                             <Box sx={{ display: 'flex', gap: 1, justifyContent: 'center' }}>
                               <Tooltip title="Editar">
