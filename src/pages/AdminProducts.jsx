@@ -12,9 +12,10 @@ import {
 import '../styles/AdminProducts.css';
 import { 
   Edit as EditIcon,
-  Delete as DeleteIcon
+  Delete as DeleteIcon,
+  Add as AddIcon
 } from '@mui/icons-material';
-import { IconButton, Tooltip, Box } from '@mui/material';
+import { IconButton, Tooltip, Box, Button, Typography } from '@mui/material';
 import ConfirmDialog from '../components/ConfirmDialog';
 import { useSnackbar } from 'notistack';
 
@@ -322,10 +323,18 @@ const AdminProducts = () => {
 
   return (
     <div className="admin-products-container">
-      <div className="header-actions">
-        <h2>Administración de Productos</h2>
-        <button 
-          className="add-product-btn"
+      <Box sx={{ 
+        display: 'flex', 
+        justifyContent: 'space-between', 
+        alignItems: 'center',
+        mb: 4 
+      }}>
+        <Typography variant="h4" component="h1">
+          Administración de Productos
+        </Typography>
+        <Button
+          variant="contained"
+          startIcon={<AddIcon />}
           onClick={() => {
             setEditingProduct(null);
             setNewProduct({
@@ -340,8 +349,8 @@ const AdminProducts = () => {
           }}
         >
           Agregar Producto
-        </button>
-      </div>
+        </Button>
+      </Box>
 
       <DragDropContext onDragEnd={onDragEnd}>
         <div className="tables-container">

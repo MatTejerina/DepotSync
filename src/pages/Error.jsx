@@ -6,7 +6,6 @@ const Error = () => {
   const navigate = useNavigate();
   const user = JSON.parse(localStorage.getItem('user'));
   
-  console.log('Error Page - User:', user); // Debug
 
   return (
     <Box

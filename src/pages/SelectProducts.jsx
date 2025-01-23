@@ -155,7 +155,6 @@ const SelectProducts = () => {
       const orderRef = collection(db, 'orders');
       const docRef = await addDoc(orderRef, orderData);
 
-      console.log('Pedido guardado con ID:', docRef.id);
       
       // Mostrar notificación de éxito
       enqueueSnackbar('Pedido enviado correctamente', { 

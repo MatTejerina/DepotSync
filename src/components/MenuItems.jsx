@@ -72,15 +72,13 @@ export const MenuItems = ({ userRole }) => {
               },
               '&:hover': {
                 backgroundColor: 'rgba(25, 118, 210, 0.08)',
+                transform: 'translateX(8px)',
                 '&.Mui-selected': {
                   backgroundColor: '#1565c0',
                 },
               },
               transition: 'all 0.2s ease-in-out',
               transform: 'translateX(0)',
-              '&:hover': {
-                transform: 'translateX(8px)',
-              }
             }}
           >
             <ListItemIcon 

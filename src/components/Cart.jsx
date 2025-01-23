@@ -26,7 +26,6 @@ const Cart = ({ items, onRemoveItem, onSubmitOrder }) => {
   // Mostrar el cart en PC solo si hay items
   const shouldShowDesktopCart = !isMobile && items.length > 0;
 
-  console.log('Items en el carrito:', items);
 
   const cartContent = (
     <>
