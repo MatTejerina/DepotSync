@@ -11,7 +11,13 @@ import Error from './pages/Error';
 import Orders from './pages/Orders';
 
 const App = () => {
-  const user = useMemo(() => JSON.parse(localStorage.getItem('user')), []);
+  const [user, setUser] = React.useState(() => {
+    try {
+      return JSON.parse(localStorage.getItem('user'));
+    } catch {
+      return null;
+    }
+  });
 
   return (
     <SnackbarProvider maxSnack={3}>

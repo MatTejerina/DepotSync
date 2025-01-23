@@ -43,7 +43,13 @@ const Login = () => {
         localStorage.setItem('token', await userCredential.user.getIdToken());
         
         enqueueSnackbar('Inicio de sesión exitoso', { variant: 'success' });
-        navigate('/');
+        
+        // Redirigimos según el rol
+        if (userData.role === 'Admin') {
+          navigate('/admin/orders');
+        } else {
+          navigate('/');
+        }
       } else {
         enqueueSnackbar('No se encontraron datos del usuario', { variant: 'error' });
       }
