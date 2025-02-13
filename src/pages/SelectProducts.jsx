@@ -40,9 +40,10 @@ const SelectProducts = () => {
     const checkBusinessHours = () => {
       const now = new Date();
       const hour = now.getHours();
-      const isWeekday = now.getDay() !== 0 && now.getDay() !== 6;
-      const isBusinessHour = hour >= 8 && hour < 14;
-      return isWeekday && isBusinessHour;
+      const dayOfWeek = now.getDay();
+      const isAllowedDay = dayOfWeek !== 0;
+      const isBusinessHour = hour >= 7 && hour < 13;
+      return isAllowedDay && isBusinessHour;
     };
 
     setIsWithinHours(checkBusinessHours());
@@ -93,7 +94,7 @@ const SelectProducts = () => {
             Fuera de Horario
           </Typography>
           <Typography variant="h6" color="text.secondary">
-            El sistema está disponible de lunes a viernes de 8:00 a 14:00 hs.
+            El sistema está disponible de lunes a sábados de 8:00 a 13:00 hs.
           </Typography>
           <Typography variant="body1" color="text.secondary">
             Por favor, intente nuevamente dentro del horario establecido.
@@ -223,7 +224,7 @@ const SelectProducts = () => {
         <MuiCard 
           className="patente-card"
           sx={{ 
-            width: '100%',
+            width: '100%', 
             maxWidth: 500,
             mx: 'auto'
           }}
