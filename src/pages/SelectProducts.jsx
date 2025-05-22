@@ -37,80 +37,80 @@ const SelectProducts = () => {
   const theme = useTheme();
 
 
-  useEffect(() => {
-    const checkBusinessHours = () => {
-      const now = new Date();
-      const hour = now.getHours();
-      const dayOfWeek = now.getDay();
-      const isAllowedDay = dayOfWeek !== 0;
-      const isBusinessHour = hour >= 7 && hour < 13;
-      return isAllowedDay && isBusinessHour;
-    };
+  // useEffect(() => {
+  //   const checkBusinessHours = () => {
+  //     const now = new Date();
+  //     const hour = now.getHours();
+  //     const dayOfWeek = now.getDay();
+  //     const isAllowedDay = dayOfWeek !== 0;
+  //     const isBusinessHour = hour >= 7 && hour < 13;
+  //     return isAllowedDay && isBusinessHour;
+  //   };
 
-    setIsWithinHours(checkBusinessHours());
-  }, []);
+  //   setIsWithinHours(checkBusinessHours());
+  // }, []);
 
-  const handleLogoutAndRedirect = async () => {
-    try {
-      await signOut(auth);
-      localStorage.removeItem('user');
-      navigate('/login');
-      enqueueSnackbar('Sesión cerrada correctamente', { 
-        variant: 'success',
-        autoHideDuration: 2000
-      });
-    } catch (error) {
-      console.error('Error al cerrar sesión:', error);
-      enqueueSnackbar('Error al cerrar sesión', { 
-        variant: 'error',
-        autoHideDuration: 2000
-      });
-    }
-  };
+  // const handleLogoutAndRedirect = async () => {
+  //   try {
+  //     await signOut(auth);
+  //     localStorage.removeItem('user');
+  //     navigate('/login');
+  //     enqueueSnackbar('Sesión cerrada correctamente', { 
+  //       variant: 'success',
+  //       autoHideDuration: 2000
+  //     });
+  //   } catch (error) {
+  //     console.error('Error al cerrar sesión:', error);
+  //     enqueueSnackbar('Error al cerrar sesión', { 
+  //       variant: 'error',
+  //       autoHideDuration: 2000
+  //     });
+  //   }
+  // };
 
-  if (!isWithinHours) {
-    return (
-      <Container maxWidth="sm">
-        <Box
-          sx={{
-            mt: 8,
-            display: 'flex',
-            flexDirection: 'column',
-            alignItems: 'center',
-            textAlign: 'center',
-            gap: 3,
-            p: 4,
-            backgroundColor: 'white',
-            borderRadius: 2,
-            boxShadow: 3
-          }}
-        >
-          <ErrorOutlineIcon 
-            sx={{ 
-              fontSize: 80,
-              color: theme.palette.error.main
-            }} 
-          />
-          <Typography variant="h4" component="h1" gutterBottom>
-            Fuera de Horario
-          </Typography>
-          <Typography variant="h6" color="text.secondary">
-            El sistema está disponible de lunes a sábados de 8:00 a 13:00 hs.
-          </Typography>
-          <Typography variant="body1" color="text.secondary">
-            Por favor, intente nuevamente dentro del horario establecido.
-          </Typography>
-          <Button
-            variant="contained"
-            onClick={handleLogoutAndRedirect}
-            sx={{ mt: 2 }}
-          >
-            Volver al Inicio
-          </Button>
-        </Box>
-      </Container>
-    );
-  }
+  // if (!isWithinHours) {
+  //   return (
+  //     <Container maxWidth="sm">
+  //       <Box
+  //         sx={{
+  //           mt: 8,
+  //           display: 'flex',
+  //           flexDirection: 'column',
+  //           alignItems: 'center',
+  //           textAlign: 'center',
+  //           gap: 3,
+  //           p: 4,
+  //           backgroundColor: 'white',
+  //           borderRadius: 2,
+  //           boxShadow: 3
+  //         }}
+  //       >
+  //         <ErrorOutlineIcon 
+  //           sx={{ 
+  //             fontSize: 80,
+  //             color: theme.palette.error.main
+  //           }} 
+  //         />
+  //         <Typography variant="h4" component="h1" gutterBottom>
+  //           Fuera de Horario
+  //         </Typography>
+  //         <Typography variant="h6" color="text.secondary">
+  //           El sistema está disponible de lunes a sábados de 8:00 a 13:00 hs.
+  //         </Typography>
+  //         <Typography variant="body1" color="text.secondary">
+  //           Por favor, intente nuevamente dentro del horario establecido.
+  //         </Typography>
+  //         <Button
+  //           variant="contained"
+  //           onClick={handleLogoutAndRedirect}
+  //           sx={{ mt: 2 }}
+  //         >
+  //           Volver al Inicio
+  //         </Button>
+  //       </Box>
+  //     </Container>
+  //   );
+  // }
 
   const handlePatenteChange = (event) => {
     setSelectedPatente(event.target.value);

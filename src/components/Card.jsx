@@ -1,4 +1,5 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
+import { useSnackbar } from 'notistack';
 import { collection, query, getDocs } from 'firebase/firestore';
 import { db } from '../services/firebase';
 import {
@@ -18,6 +19,8 @@ const ProductCard = ({ selectedPatente, onAddToCart, cartItems }) => {
   const [products, setProducts] = useState([]);
   const [quantities, setQuantities] = useState({});
   const [loading, setLoading] = useState(true);
+  const { enqueueSnackbar } = useSnackbar();
+  const timeoutsRef = useRef({}); // Guarda los timeouts por producto
 
   useEffect(() => {
     const fetchProducts = async () => {
@@ -59,11 +62,35 @@ const ProductCard = ({ selectedPatente, onAddToCart, cartItems }) => {
       ...prev,
       [productId]: value
     }));
+
+    // Limpiar timeout anterior si existe
+    if (timeoutsRef.current[productId]) {
+      clearTimeout(timeoutsRef.current[productId]);
+    }
+
+    // Si la cantidad es mayor a 0, iniciar timeout para mostrar notistack
+    if (value > 0) {
+      timeoutsRef.current[productId] = setTimeout(() => {
+        // Si el producto NO está en el carrito, mostrar notistack
+        if (!cartItems.some(item => item.id === productId)) {
+          const product = products.find(p => p.id === productId);
+          enqueueSnackbar(
+            `Seleccionaste ${value} ${product.material}. Recuerda agregarlo al carrito.`,
+            { variant: 'warning', autoHideDuration: 2000 }
+          );
+        }
+      }, 2000);
+    }
   };
 
   const handleAddToCart = (product) => {
     const quantity = quantities[product.id];
     if (quantity > 0) {
+      // Limpiar timeout si existe (el usuario sí agregó al carrito)
+      if (timeoutsRef.current[product.id]) {
+        clearTimeout(timeoutsRef.current[product.id]);
+        delete timeoutsRef.current[product.id];
+      }
       onAddToCart({
         ...product,
         quantity

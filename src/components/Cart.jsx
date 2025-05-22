@@ -12,7 +12,8 @@ import {
   Drawer,
   useMediaQuery,
   useTheme,
-  Badge
+  Badge,
+  CircularProgress // Agrega esta importación
 } from '@mui/material';
 import DeleteIcon from '@mui/icons-material/Delete';
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
@@ -20,12 +21,23 @@ import CloseIcon from '@mui/icons-material/Close';
 
 const Cart = ({ items, onRemoveItem, onSubmitOrder }) => {
   const [isOpen, setIsOpen] = React.useState(false);
+  const [loading, setLoading] = React.useState(false); // Nuevo estado
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
 
   // Mostrar el cart en PC solo si hay items
   const shouldShowDesktopCart = !isMobile && items.length > 0;
 
+
+  // Nueva función para manejar el envío con loading
+  const handleSubmit = async () => {
+    setLoading(true);
+    try {
+      await onSubmitOrder();
+    } finally {
+      setLoading(false);
+    }
+  };
 
   const cartContent = (
     <>
@@ -127,15 +139,23 @@ const Cart = ({ items, onRemoveItem, onSubmitOrder }) => {
           variant="contained"
           color="primary"
           fullWidth
-          onClick={onSubmitOrder}
-          disabled={items.length === 0}
+          onClick={handleSubmit}
+          disabled={items.length === 0 || loading}
           sx={{
             py: 1.5,
             fontSize: '1rem',
-            fontWeight: 'bold'
+            fontWeight: 'bold',
+            position: 'relative'
           }}
         >
-          Enviar Pedido
+          {loading ? (
+            <>
+              <CircularProgress size={24} color="inherit" sx={{ position: 'absolute', left: '50%', top: '50%', marginTop: '-12px', marginLeft: '-12px' }} />
+              Enviando...
+            </>
+          ) : (
+            'Enviar Pedido'
+          )}
         </Button>
       </Box>
     </>
@@ -232,4 +252,4 @@ const Cart = ({ items, onRemoveItem, onSubmitOrder }) => {
   );
 };
 
-export default Cart; 
+export default Cart;
