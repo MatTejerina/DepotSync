@@ -63,23 +63,17 @@ const ProductCard = ({ selectedPatente, onAddToCart, cartItems }) => {
       [productId]: value
     }));
 
-    // Limpiar timeout anterior si existe
-    if (timeoutsRef.current[productId]) {
-      clearTimeout(timeoutsRef.current[productId]);
-    }
-
-    // Si la cantidad es mayor a 0, iniciar timeout para mostrar notistack
     if (value > 0) {
-      timeoutsRef.current[productId] = setTimeout(() => {
-        // Si el producto NO está en el carrito, mostrar notistack
-        if (!cartItems.some(item => item.id === productId)) {
-          const product = products.find(p => p.id === productId);
-          enqueueSnackbar(
-            `Seleccionaste ${value} ${product.material}. Recuerda agregarlo al carrito.`,
-            { variant: 'warning', autoHideDuration: 2000 }
-          );
-        }
-      }, 2000);
+      const product = products.find(p => p.id === productId);
+      onAddToCart({ ...product, quantity: value });
+      enqueueSnackbar(
+        `${value} ${product.material} agregado al carrito.`,
+        { variant: 'success', autoHideDuration: 2000 }
+      );
+      setQuantities(prev => ({
+        ...prev,
+        [productId]: 0
+      }));
     }
   };
 
@@ -175,15 +169,19 @@ const ProductCard = ({ selectedPatente, onAddToCart, cartItems }) => {
                 <Typography variant="caption" display="block" sx={{ mt: 1 }}>
                   Máximo permitido: {product.maximo}
                 </Typography>
-                <Button
-                  variant="contained"
-                  fullWidth
-                  onClick={() => handleAddToCart(product)}
-                  disabled={quantities[product.id] === 0 || isInCart}
-                  sx={{ mt: 2 }}
-                >
-                  {isInCart ? 'Ya en el carrito' : 'Agregar al carrito'}
-                </Button>
+                {isInCart ? (
+                  <Typography
+                    variant="body2"
+                    sx={{
+                      mt: 2,
+                      color: '#1976d2',
+                      fontWeight: 700,
+                      textAlign: 'center'
+                    }}
+                  >
+                    Ya agregado al carrito
+                  </Typography>
+                ) : null}
               </CardContent>
             </Card>
           </Grid>
