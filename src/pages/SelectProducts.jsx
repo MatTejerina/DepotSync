@@ -180,10 +180,10 @@ const SelectProducts = () => {
   };
 
   const patentes = [
-    'JX', 'LR', 'LS', 'VT', 'VU', 'VW', 'VV',
-    'VX', 'XA', 'XS', 'XT', 'XV', 'XU', 'YG',
+    'LS', 'VT', 'VU', 'VW', 'VV',
+    'VX', 'XA', 'XT', 'XV', 'XU', 'YG',
     'VY', 'YA', 'YJ', 'YC','TE','TH', 'XX', 'TJ',
-    'YH', 'YF', 'MU', 'ME'
+    'YH', 'YF', 'MU', 'ME', 'MZ'
   ].sort().map(patente => ({
     id: patente,
     label: `Móvil ${patente}`
