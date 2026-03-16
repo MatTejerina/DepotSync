@@ -183,7 +183,7 @@ const SelectProducts = () => {
     'LS', 'VT', 'VU', 'VW', 'VV',
     'VX', 'XA', 'XT', 'XV', 'XU', 'YG',
     'VY', 'YA', 'YJ', 'YC','TE','TH', 'XX', 'TJ',
-    'YH', 'YF', 'MU', 'ME', 'MZ'
+    'YH', 'YF', 'MU', 'ME', 'MZ', 'OM'
   ].sort().map(patente => ({
     id: patente,
     label: `Móvil ${patente}`
